@@ -7,8 +7,8 @@ public class Archer extends Unit {
 
     private int countArrows;
 
-    public Archer(int i, int j) {
-        super(i, j,
+    public Archer(Point point) {
+        super(point,
                 SettingsHelper.getCharValue("archerSkin"),
                 RandomHelper.getRandomInRange(
                         SettingsHelper.getIntValue("archerMinHp"),

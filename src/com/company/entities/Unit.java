@@ -1,7 +1,9 @@
 package com.company.entities;
 
 public abstract class Unit {
-    private int i, j;
+    private int id;
+
+    private Point point;
     private char skin;
 
     private int hp;
@@ -10,9 +12,9 @@ public abstract class Unit {
 
     private int minDamage, maxDamage;
 
-    public Unit(int i, int j, char skin, int hp, int stepDistance, int attackDistance, int minDamage, int maxDamage) {
-        this.i = i;
-        this.j = j;
+    public Unit(Point point, char skin, int hp, int stepDistance, int attackDistance, int minDamage, int maxDamage) {
+        this.id = 0;
+        this.point = point;
         this.skin = skin;
         this.hp = hp;
         this.stepDistance = stepDistance;
@@ -21,12 +23,12 @@ public abstract class Unit {
         this.maxDamage = maxDamage;
     }
 
-    public int getI() {
-        return i;
+    public int getId() {
+        return id;
     }
 
-    public int getJ() {
-        return j;
+    public Point getPoint() {
+        return point;
     }
 
     public char getSkin() {
@@ -57,10 +59,14 @@ public abstract class Unit {
         hp -= damage;
     }
 
+    protected void setId(int id){
+        this.id = id;
+    }
+
     public abstract void attack(Unit unit);
 
     public boolean canAttack(Unit unit) {
-        double distance = Math.sqrt(Math.pow(unit.i - i, 2) + Math.pow(unit.j - j, 2));
+        double distance = Math.sqrt(Math.pow(unit.getPoint().I - point.I, 2) + Math.pow(unit.getPoint().J - point.J, 2));
 
         return distance <= (double) attackDistance;
     }
