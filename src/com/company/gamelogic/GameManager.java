@@ -10,6 +10,17 @@ import com.company.util.SettingsHelper;
 import com.company.view.BattleField;
 
 public class GameManager {
+    private class RandomArea{
+        public int minI, maxI, minJ, maxJ;
+
+        public RandomArea(int minI, int maxI, int minJ, int maxJ) {
+            this.minI = minI;
+            this.maxI = maxI;
+            this.minJ = minJ;
+            this.maxJ = maxJ;
+        }
+    }
+
     private Player player1, player2;
     private BattleField battleField;
 
@@ -35,6 +46,23 @@ public class GameManager {
 
         int countUnits = ConsoleHelper.inputInt("По сколько существ будет у героев?: ", 1, 5);
 
+        ConsoleHelper.printlnMessage("Ввод существ для игрока 1: ");
+        inputUnitsForPlayer(player1, getPlayer1RandomArea(), countUnits);
+
+        ConsoleHelper.printlnMessage("Ввод существ для игрока 2: ");
+        inputUnitsForPlayer(player2, getPlayer2RandomArea(), countUnits);
+    }
+
+    public void drawBattleField() {
+        battleField.clear();
+
+        fillBattleFieldPlayerUnits(player1);
+        fillBattleFieldPlayerUnits(player2);
+
+        battleField.drawField();
+    }
+
+    private RandomArea getPlayer1RandomArea(){
         int minI, maxI, minJ, maxJ;
 
         int quadRows = battleFieldCountRows / 2 / 4;
@@ -46,8 +74,14 @@ public class GameManager {
         minJ = quadColumns;
         maxJ = quadColumns * 3;
 
-        ConsoleHelper.printlnMessage("Ввод существ для игрока 1: ");
-        inputUnitsForPlayer(player1, minI, maxI, minJ, maxJ, countUnits);
+        return new RandomArea(minI, maxI, minJ, maxJ);
+    }
+
+    private RandomArea getPlayer2RandomArea(){
+        int minI, maxI, minJ, maxJ;
+
+        int quadRows = battleFieldCountRows / 2 / 4;
+        int quadColumns = battleFieldCountColumns / 2 / 4;
 
         minI = quadRows;
         maxI = quadRows * 3;
@@ -55,45 +89,35 @@ public class GameManager {
         minJ = battleFieldCountColumns / 2 + quadColumns;
         maxJ = battleFieldCountColumns / 2 + quadColumns * 3;
 
-        ConsoleHelper.printlnMessage("Ввод существ для игрока 2: ");
-        inputUnitsForPlayer(player2, minI, maxI, minJ, maxJ, countUnits);
+        return new RandomArea(minI, maxI, minJ, maxJ);
     }
 
-    public void drawBattleField() {
-        battleField.clear();
-
-        for (int i = 0; i < player1.getUnits().size(); i++) {
-            Unit currentUnit = player1.getUnits().get(i);
+    private void fillBattleFieldPlayerUnits(Player player) {
+        for (int i = 0; i < player.getUnits().size(); i++) {
+            Unit currentUnit = player.getUnits().get(i);
             battleField.setCellValue(currentUnit.getPoint(), currentUnit.getSkin());
         }
-
-        for (int i = 0; i < player2.getUnits().size(); i++) {
-            Unit currentUnit = player2.getUnits().get(i);
-            battleField.setCellValue(currentUnit.getPoint(), currentUnit.getSkin());
-        }
-
-        battleField.drawField();
     }
 
-    private Point getRandomPointForUnit(int minI, int maxI, int minJ, int maxJ) {
+    private Point getRandomPointForUnit(RandomArea randomArea) {
 
         int i, j;
 
         do {
-            i = RandomHelper.getRandomInRange(minI, maxI);
-            j = RandomHelper.getRandomInRange(minJ, maxJ);
+            i = RandomHelper.getRandomInRange(randomArea.minI, randomArea.maxI);
+            j = RandomHelper.getRandomInRange(randomArea.minJ, randomArea.maxJ);
         } while (battleField.isEmpty(i, j) == false);
 
         return new Point(i, j);
     }
 
-    private void inputUnitsForPlayer(Player player, int minI, int maxI, int minJ, int maxJ, int countUnits) {
+    private void inputUnitsForPlayer(Player player, RandomArea randomArea, int countUnits) {
         for (int i = 0; i < countUnits; i++) {
             ConsoleHelper.printlnMessage(String.format("Существо %d из %d", i + 1, countUnits));
 
             int typeCurrentUnit = ConsoleHelper.inputInt("Кого вы хотите добавить(1-лучник, 2-маг, 3-наездник): ", 1, 3);
 
-            Point currentPoint = getRandomPointForUnit(minI, maxI, minJ, maxJ);
+            Point currentPoint = getRandomPointForUnit(randomArea);
 
             switch (typeCurrentUnit) {
                 case 1:

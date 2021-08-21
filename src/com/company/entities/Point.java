@@ -1,11 +1,11 @@
 package com.company.entities;
 
 public class Point {
-    public int I;
-    public int J;
+    public int i;
+    public int j;
 
     public Point(int i, int j) {
-        I = i;
-        J = j;
+        this.i = i;
+        this.j = j;
     }
 }

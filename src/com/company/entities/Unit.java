@@ -66,7 +66,7 @@ public abstract class Unit {
     public abstract void attack(Unit unit);
 
     public boolean canAttack(Unit unit) {
-        double distance = Math.sqrt(Math.pow(unit.getPoint().I - point.I, 2) + Math.pow(unit.getPoint().J - point.J, 2));
+        double distance = Math.sqrt(Math.pow(unit.getPoint().i - point.i, 2) + Math.pow(unit.getPoint().j - point.j, 2));
 
         return distance <= (double) attackDistance;
     }

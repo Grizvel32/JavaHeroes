@@ -1,7 +1,6 @@
 package com.company.view;
 
 import com.company.entities.Point;
-import com.company.util.SettingsHelper;
 
 public class BattleField {
 
@@ -26,7 +25,7 @@ public class BattleField {
     }
 
     public void setCellValue(Point point, char value) {
-        field[point.I][point.J] = value;
+        field[point.i][point.j] = value;
     }
 
     public void drawField() {
