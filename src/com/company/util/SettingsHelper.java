@@ -20,7 +20,6 @@ public class SettingsHelper {
 
                 settings.put(parts[0], parts[1]);
             }
-            int a=5;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

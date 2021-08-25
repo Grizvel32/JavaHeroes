@@ -1,4 +1,4 @@
-10
+25
 battleFieldCountRows=12
 battleFieldCountColumns=24
 archerSkin=A
@@ -9,3 +9,18 @@ archerAttackDistance=1
 archerMinDamage=10
 archerMaxDamage=20
 archerCountArrows=1
+wizardSkin=W
+wizardMinHp=10
+wizardMaxHp=20
+wizardStepDistance=1
+wizardAttackDistance=1
+wizardMinDamage=10
+wizardMaxDamage=20
+wizardManaPoints=1
+horsemanSkin=H
+horsemanMinHp=10
+horsemanMaxHp=20
+horsemanStepDistance=1
+horsemanAttackDistance=1
+horsemanMinDamage=10
+horsemanMaxDamage=20
