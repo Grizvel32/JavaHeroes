@@ -26,4 +26,9 @@ public class Horseman extends Unit{
 
         unit.decreaseHp(damage);
     }
+
+    @Override
+    public String getInfo() {
+        return String.format("Существо: %c; id: %d, позиция: i-%d, j-%d; здоровье: %d, сила атаки: от %d до %d", getSkin(), getId(), getPoint().i, getPoint().j, getHp(), getMinDamage(), getMaxDamage());
+    }
 }

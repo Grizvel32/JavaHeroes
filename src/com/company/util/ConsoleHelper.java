@@ -1,5 +1,6 @@
 package com.company.util;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleHelper {
@@ -36,6 +37,33 @@ public class ConsoleHelper {
                 number = input.nextInt();
 
                 if (number < minValue || number > maxValue) {
+                    throw new Exception();
+                }
+
+            } catch (Exception e) {
+                isNumber = false;
+            }
+
+        } while (isNumber == false);
+
+        return number;
+    }
+
+    public static int inputInt(String message, ArrayList<Integer> allowValues) {
+        boolean isNumber;
+        int number = 0;
+
+        do {
+            try {
+                isNumber = true;
+                Scanner input = new Scanner(System.in);
+
+                System.out.print(message);
+                number = input.nextInt();
+
+                int findIndex = allowValues.indexOf(number);
+
+                if (findIndex == -1) {
                     throw new Exception();
                 }
 
@@ -88,7 +116,13 @@ public class ConsoleHelper {
         return string;
     }
 
-    public static void printlnMessage(String message){
+    public static void printlnMessage(String message) {
         System.out.println(message);
     }
+
+    public static void printlnDivider(){
+        System.out.println("--------");
+    }
+
+
 }

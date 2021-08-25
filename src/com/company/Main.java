@@ -6,9 +6,9 @@ import com.company.util.RandomHelper;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         GameManager gameManager = new GameManager();
         gameManager.init();
-        gameManager.drawBattleField();
+        gameManager.gameLoop();
     }
 }

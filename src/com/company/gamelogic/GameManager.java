@@ -1,16 +1,14 @@
 package com.company.gamelogic;
 
-import com.company.entities.Archer;
-import com.company.entities.Player;
-import com.company.entities.Point;
-import com.company.entities.Unit;
+import com.company.entities.*;
 import com.company.util.ConsoleHelper;
 import com.company.util.RandomHelper;
 import com.company.util.SettingsHelper;
 import com.company.view.BattleField;
+import com.company.view.ViewHelper;
 
 public class GameManager {
-    private class RandomArea{
+    private class RandomArea {
         public int minI, maxI, minJ, maxJ;
 
         public RandomArea(int minI, int maxI, int minJ, int maxJ) {
@@ -44,7 +42,7 @@ public class GameManager {
         String player2Name = ConsoleHelper.inputString("Введите имя игрока 2: ");
         player2 = new Player(player2Name);
 
-        int countUnits = ConsoleHelper.inputInt("По сколько существ будет у героев?: ", 1, 5);
+        int countUnits = ConsoleHelper.inputInt("По сколько существ будет у героев?(от 1 до 5): ", 1, 5);
 
         ConsoleHelper.printlnMessage("Ввод существ для игрока 1: ");
         inputUnitsForPlayer(player1, getPlayer1RandomArea(), countUnits);
@@ -53,7 +51,30 @@ public class GameManager {
         inputUnitsForPlayer(player2, getPlayer2RandomArea(), countUnits);
     }
 
-    public void drawBattleField() {
+    public void gameLoop() throws Exception {
+        while (true) {
+            drawBattleField();
+
+            ConsoleHelper.printlnMessage("Ход игрока: " + player1.getName());
+
+            ConsoleHelper.printlnMessage("Список существ игрока "+player1.getName()+": ");
+            ViewHelper.showPlayerUnits(player1);
+
+            ConsoleHelper.printlnDivider();
+
+            ConsoleHelper.printlnMessage("Список существ игрока "+player2.getName()+": ");
+            ViewHelper.showPlayerUnits(player2);
+
+            int unitId = ConsoleHelper.inputInt("Введите id атакующего существа игока "+player1.getName()+": ", player1.getAllUnitsIds());
+
+            ConsoleHelper.printlnMessage("Выбранное существо: ");
+            ViewHelper.showUnit(player1.getUnitById(unitId));
+        }
+    }
+
+    //region helper private methods
+
+    private void drawBattleField() {
         battleField.clear();
 
         fillBattleFieldPlayerUnits(player1);
@@ -62,10 +83,10 @@ public class GameManager {
         battleField.drawField();
     }
 
-    private RandomArea getPlayer1RandomArea(){
+    private RandomArea getPlayer1RandomArea() {
         int minI, maxI, minJ, maxJ;
 
-        int quadRows = battleFieldCountRows / 2 / 4;
+        int quadRows = battleFieldCountRows / 4;
         int quadColumns = battleFieldCountColumns / 2 / 4;
 
         minI = quadRows;
@@ -77,10 +98,10 @@ public class GameManager {
         return new RandomArea(minI, maxI, minJ, maxJ);
     }
 
-    private RandomArea getPlayer2RandomArea(){
+    private RandomArea getPlayer2RandomArea() {
         int minI, maxI, minJ, maxJ;
 
-        int quadRows = battleFieldCountRows / 2 / 4;
+        int quadRows = battleFieldCountRows / 4;
         int quadColumns = battleFieldCountColumns / 2 / 4;
 
         minI = quadRows;
@@ -123,8 +144,16 @@ public class GameManager {
                 case 1:
                     player.add(new Archer(currentPoint));
                     break;
+                case 2:
+                    player.add(new Wizard(currentPoint));
+                    break;
+                case 3:
+                    player.add(new Horseman(currentPoint));
+                    break;
             }
         }
     }
+
+    //endregion
 
 }

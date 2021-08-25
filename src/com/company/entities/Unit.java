@@ -23,6 +23,7 @@ public abstract class Unit {
         this.maxDamage = maxDamage;
     }
 
+    //region public methods
     public int getId() {
         return id;
     }
@@ -55,6 +56,16 @@ public abstract class Unit {
         return maxDamage;
     }
 
+    public boolean canAttack(Unit unit) {
+        double distance = Math.sqrt(Math.pow(unit.getPoint().i - point.i, 2) + Math.pow(unit.getPoint().j - point.j, 2));
+
+        return distance <= (double) attackDistance;
+    }
+
+    //endregion
+
+    //region protected methods
+
     protected void decreaseHp(int damage) {
         hp -= damage;
     }
@@ -63,11 +74,13 @@ public abstract class Unit {
         this.id = id;
     }
 
+    //endregion
+
+    //region public abstract methods
+
     public abstract void attack(Unit unit);
 
-    public boolean canAttack(Unit unit) {
-        double distance = Math.sqrt(Math.pow(unit.getPoint().i - point.i, 2) + Math.pow(unit.getPoint().j - point.j, 2));
+    public abstract String getInfo();
 
-        return distance <= (double) attackDistance;
-    }
+    //endregion
 }
