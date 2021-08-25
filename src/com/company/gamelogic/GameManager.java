@@ -44,10 +44,10 @@ public class GameManager {
 
         int countUnits = ConsoleHelper.inputInt("По сколько существ будет у героев?(от 1 до 5): ", 1, 5);
 
-        ConsoleHelper.printlnMessage("Ввод существ для игрока 1: ");
+        ConsoleHelper.printlnMessage("Ввод существ для игрока "+player1.getName()+": ");
         inputUnitsForPlayer(player1, getPlayer1RandomArea(), countUnits);
 
-        ConsoleHelper.printlnMessage("Ввод существ для игрока 2: ");
+        ConsoleHelper.printlnMessage("Ввод существ для игрока "+player2.getName()+": ");
         inputUnitsForPlayer(player2, getPlayer2RandomArea(), countUnits);
     }
 
@@ -57,6 +57,8 @@ public class GameManager {
 
             ConsoleHelper.printlnMessage("Ход игрока: " + player1.getName());
 
+            ConsoleHelper.printlnDivider();
+
             ConsoleHelper.printlnMessage("Список существ игрока "+player1.getName()+": ");
             ViewHelper.showPlayerUnits(player1);
 
@@ -65,10 +67,21 @@ public class GameManager {
             ConsoleHelper.printlnMessage("Список существ игрока "+player2.getName()+": ");
             ViewHelper.showPlayerUnits(player2);
 
-            int unitId = ConsoleHelper.inputInt("Введите id атакующего существа игока "+player1.getName()+": ", player1.getAllUnitsIds());
+            ConsoleHelper.printlnDivider();
 
-            ConsoleHelper.printlnMessage("Выбранное существо: ");
-            ViewHelper.showUnit(player1.getUnitById(unitId));
+            int attackUnitId = ConsoleHelper.inputInt("Введите id атакующего существа игока "+player1.getName()+": ", player1.getAllUnitsIds());
+
+            int defendUnitId = ConsoleHelper.inputInt("Введите id защищающегося существа игока "+player2.getName()+": ", player2.getAllUnitsIds());
+
+            ConsoleHelper.printlnDivider();
+
+            ConsoleHelper.printlnMessage("Выбранное атакующее существо: ");
+            ViewHelper.showUnit(player1.getUnitById(attackUnitId));
+
+            ConsoleHelper.printlnMessage("Выбранное защищающееся существо: ");
+            ViewHelper.showUnit(player1.getUnitById(defendUnitId));
+
+            ConsoleHelper.waitEnter();
         }
     }
 

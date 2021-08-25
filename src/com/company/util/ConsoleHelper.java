@@ -1,5 +1,6 @@
 package com.company.util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -122,6 +123,10 @@ public class ConsoleHelper {
 
     public static void printlnDivider(){
         System.out.println("--------");
+    }
+
+    public static void waitEnter() throws IOException {
+        System.in.read();
     }
 
 
