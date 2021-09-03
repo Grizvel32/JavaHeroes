@@ -1,8 +1,7 @@
 package com.company;
 
-import com.company.entities.Archer;
 import com.company.gamelogic.GameManager;
-import com.company.util.RandomHelper;
+
 
 public class Main {
 
