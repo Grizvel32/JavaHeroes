@@ -3,7 +3,7 @@ package com.company.entities;
 import com.company.util.RandomHelper;
 import com.company.util.SettingsHelper;
 
-public class Horseman extends Unit{
+public class Horseman extends Unit {
 
     public Horseman(Point point) {
         super(point,

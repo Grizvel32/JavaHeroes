@@ -1,6 +1,10 @@
 package com.company.gamelogic;
 
 import com.company.entities.*;
+import com.company.entities.Archer;
+import com.company.entities.Horseman;
+import com.company.entities.Unit;
+import com.company.entities.Wizard;
 import com.company.util.ConsoleHelper;
 import com.company.util.RandomHelper;
 import com.company.util.SettingsHelper;
@@ -79,7 +83,7 @@ public class GameManager {
             ViewHelper.showUnit(player1.getUnitById(attackUnitId));
 
             ConsoleHelper.printlnMessage("Выбранное защищающееся существо: ");
-            ViewHelper.showUnit(player1.getUnitById(defendUnitId));
+            ViewHelper.showUnit(player2.getUnitById(defendUnitId));
 
             ConsoleHelper.waitEnter();
         }

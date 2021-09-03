@@ -70,8 +70,12 @@ public abstract class Unit {
         hp -= damage;
     }
 
-    protected void setId(int id){
+    protected void setId(int id) {
         this.id = id;
+    }
+
+    protected void setAttackDistanceForHandsAttack() {
+        attackDistance = 1;
     }
 
     //endregion
