@@ -1,5 +1,6 @@
 package com.company.entities;
 
+import com.company.entities.supportings.Point;
 import com.company.util.RandomHelper;
 import com.company.util.SettingsHelper;
 

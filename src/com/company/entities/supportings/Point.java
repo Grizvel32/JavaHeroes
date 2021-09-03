@@ -1,4 +1,4 @@
-package com.company.entities;
+package com.company.entities.supportings;
 
 public class Point {
     public int i;

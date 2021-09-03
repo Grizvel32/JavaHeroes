@@ -1,6 +1,6 @@
 package com.company.view;
 
-import com.company.entities.Point;
+import com.company.entities.supportings.Point;
 
 public class BattleField {
 

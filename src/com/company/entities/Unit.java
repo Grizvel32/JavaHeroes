@@ -1,5 +1,8 @@
 package com.company.entities;
 
+import com.company.entities.supportings.Point;
+import com.company.entities.supportings.RectangleArea;
+
 public abstract class Unit {
     private int id;
 
@@ -60,6 +63,56 @@ public abstract class Unit {
         double distance = Math.sqrt(Math.pow(unit.getPoint().i - point.i, 2) + Math.pow(unit.getPoint().j - point.j, 2));
 
         return distance <= (double) attackDistance;
+    }
+
+    public void moveUp(int minI, int maxI) {
+        point.i--;
+
+        if (point.i < minI) {
+            point.i = maxI;
+        }
+    }
+
+    public void moveDown(int minI, int maxI) {
+        point.i++;
+
+        if (point.i > maxI) {
+            point.i = minI;
+        }
+    }
+
+    public void moveRight(int minJ, int maxJ) {
+        point.j++;
+
+        if (point.j > maxJ) {
+            point.j = minJ;
+        }
+    }
+
+    public void moveLeft(int minJ, int maxJ) {
+        point.j--;
+
+        if (point.j < minJ) {
+            point.j = maxJ;
+        }
+    }
+
+    //todo refactor this, numbers is bad decision
+    public void move(int direction, RectangleArea rectangleArea) {
+        switch (direction) {
+            case 1:
+                moveUp(rectangleArea.minI, rectangleArea.maxI);
+                break;
+            case 2:
+                moveDown(rectangleArea.minI, rectangleArea.maxI);
+                break;
+            case 3:
+                moveLeft(rectangleArea.minJ, rectangleArea.maxJ);
+                break;
+            case 4:
+                moveRight(rectangleArea.minJ, rectangleArea.maxJ);
+                break;
+        }
     }
 
     //endregion
