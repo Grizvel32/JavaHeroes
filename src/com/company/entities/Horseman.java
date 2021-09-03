@@ -21,7 +21,6 @@ public class Horseman extends Unit {
 
     @Override
     public void attack(Unit unit) {
-        //todo доделать атаку руками или стрелами, при ближнем бое делить на 2 + выбрать тип атаки
         int damage = RandomHelper.getRandomInRange(getMinDamage(), getMaxDamage());
 
         unit.decreaseHp(damage);

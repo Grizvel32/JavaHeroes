@@ -48,10 +48,10 @@ public class GameManager {
 
         int countUnits = ConsoleHelper.inputInt("По сколько существ будет у героев?(от 1 до 5): ", 1, 5);
 
-        ConsoleHelper.printlnMessage("Ввод существ для игрока "+player1.getName()+": ");
+        ConsoleHelper.printlnMessage("Ввод существ для игрока "+player1.getPlayerName()+": ");
         inputUnitsForPlayer(player1, getPlayer1RandomArea(), countUnits);
 
-        ConsoleHelper.printlnMessage("Ввод существ для игрока "+player2.getName()+": ");
+        ConsoleHelper.printlnMessage("Ввод существ для игрока "+player2.getPlayerName()+": ");
         inputUnitsForPlayer(player2, getPlayer2RandomArea(), countUnits);
     }
 
@@ -59,23 +59,23 @@ public class GameManager {
         while (true) {
             drawBattleField();
 
-            ConsoleHelper.printlnMessage("Ход игрока: " + player1.getName());
+            ConsoleHelper.printlnMessage("Ход игрока: " + player1.getPlayerName());
 
             ConsoleHelper.printlnDivider();
 
-            ConsoleHelper.printlnMessage("Список существ игрока "+player1.getName()+": ");
+            ConsoleHelper.printlnMessage("Список существ игрока "+player1.getPlayerName()+": ");
             ViewHelper.showPlayerUnits(player1);
 
             ConsoleHelper.printlnDivider();
 
-            ConsoleHelper.printlnMessage("Список существ игрока "+player2.getName()+": ");
+            ConsoleHelper.printlnMessage("Список существ игрока "+player2.getPlayerName()+": ");
             ViewHelper.showPlayerUnits(player2);
 
             ConsoleHelper.printlnDivider();
 
-            int attackUnitId = ConsoleHelper.inputInt("Введите id атакующего существа игока "+player1.getName()+": ", player1.getAllUnitsIds());
+            int attackUnitId = ConsoleHelper.inputInt("Введите id атакующего существа игока "+player1.getPlayerName()+": ", player1.getAllUnitsIds());
 
-            int defendUnitId = ConsoleHelper.inputInt("Введите id защищающегося существа игока "+player2.getName()+": ", player2.getAllUnitsIds());
+            int defendUnitId = ConsoleHelper.inputInt("Введите id защищающегося существа игока "+player2.getPlayerName()+": ", player2.getAllUnitsIds());
 
             ConsoleHelper.printlnDivider();
 
@@ -159,13 +159,13 @@ public class GameManager {
 
             switch (typeCurrentUnit) {
                 case 1:
-                    player.add(new Archer(currentPoint));
+                    player.addUnit(new Archer(currentPoint));
                     break;
                 case 2:
-                    player.add(new Wizard(currentPoint));
+                    player.addUnit(new Wizard(currentPoint));
                     break;
                 case 3:
-                    player.add(new Horseman(currentPoint));
+                    player.addUnit(new Horseman(currentPoint));
                     break;
             }
         }

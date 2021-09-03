@@ -23,10 +23,19 @@ public class Wizard extends Unit {
 
     @Override
     public void attack(Unit unit) {
-        //todo доделать атаку руками или стрелами, при ближнем бое делить на 2 + выбрать тип атаки
         int damage = RandomHelper.getRandomInRange(getMinDamage(), getMaxDamage());
 
         unit.decreaseHp(damage);
+    }
+
+    public void Bless(Unit unit){
+        unit.setMinDamage(unit.getMaxDamage());
+        manaPoints--;
+    }
+
+    public void Curse(Unit unit){
+        unit.setMaxDamage(unit.getMinDamage());
+        manaPoints--;
     }
 
     @Override

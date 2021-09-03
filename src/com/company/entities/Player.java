@@ -5,17 +5,17 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private ArrayList<Unit> units;
-    private int currentId;
+    private int currentUnitId;
 
     public Player(String name) {
         this.name = name;
         units = new ArrayList<>();
-        currentId = 0;
+        currentUnitId = 0;
     }
 
-    public void add(Unit unit) {
-        currentId++;
-        unit.setId(currentId);
+    public void addUnit(Unit unit) {
+        currentUnitId++;
+        unit.setId(currentUnitId);
 
         units.add(unit);
     }
@@ -37,7 +37,7 @@ public class Player {
         throw new Exception("user not found");
     }
 
-    public String getName() {
+    public String getPlayerName() {
         return name;
     }
 

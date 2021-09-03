@@ -78,6 +78,14 @@ public abstract class Unit {
         attackDistance = 1;
     }
 
+    protected void setMinDamage(int minDamage) {
+        this.minDamage = minDamage;
+    }
+
+    protected void setMaxDamage(int maxDamage) {
+        this.maxDamage = maxDamage;
+    }
+
     //endregion
 
     //region public abstract methods
