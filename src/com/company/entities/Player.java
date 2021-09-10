@@ -24,7 +24,7 @@ public class Player {
         return units;
     }
 
-    public Unit getUnitById(int id) throws Exception {
+    public Unit getUnitById(int id){
 
         for (int i = 0; i < units.size(); i++) {
             Unit currentUnit = units.get(i);
@@ -34,7 +34,7 @@ public class Player {
             }
         }
 
-        throw new Exception("user not found");
+        return null;
     }
 
     public String getPlayerName() {

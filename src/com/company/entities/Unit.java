@@ -143,7 +143,7 @@ public abstract class Unit {
 
     //region public abstract methods
 
-    public abstract void attack(Unit unit);
+    public abstract int attack(Unit unit);
 
     public abstract String getInfo();
 

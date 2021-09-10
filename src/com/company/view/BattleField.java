@@ -1,6 +1,9 @@
 package com.company.view;
 
 import com.company.entities.supportings.Point;
+import com.company.entities.supportings.RectangleArea;
+
+import java.util.concurrent.locks.ReadWriteLock;
 
 public class BattleField {
 
@@ -39,5 +42,9 @@ public class BattleField {
 
     public boolean isEmpty(int i, int j) {
         return field[i][j] == EMPTY_CELL;
+    }
+
+    public RectangleArea getBattleFieldArea(){
+        return new RectangleArea(0, countRows, 0, countColumns);
     }
 }

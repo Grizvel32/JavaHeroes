@@ -21,10 +21,12 @@ public class Horseman extends Unit {
     }
 
     @Override
-    public void attack(Unit unit) {
+    public int attack(Unit unit) {
         int damage = RandomHelper.getRandomInRange(getMinDamage(), getMaxDamage());
 
         unit.decreaseHp(damage);
+
+        return damage;
     }
 
     @Override

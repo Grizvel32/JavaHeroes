@@ -51,7 +51,7 @@ public class Archer extends Unit {
     }
 
     @Override
-    public void attack(Unit unit) {
+    public int attack(Unit unit) {
         int damage = RandomHelper.getRandomInRange(getMinDamage(), getMaxDamage());
 
         if (currentAttackType == AttackType.HANDS) {
@@ -68,6 +68,8 @@ public class Archer extends Unit {
                 setAttackDistanceForHandsAttack();
             }
         }
+
+        return damage;
     }
 
     @Override

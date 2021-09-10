@@ -23,18 +23,24 @@ public class Wizard extends Unit {
     }
 
     @Override
-    public void attack(Unit unit) {
+    public int attack(Unit unit) {
         int damage = RandomHelper.getRandomInRange(getMinDamage(), getMaxDamage());
 
         unit.decreaseHp(damage);
+
+        return damage;
     }
 
-    public void Bless(Unit unit){
+    public boolean canMagic() {
+        return manaPoints > 0;
+    }
+
+    public void bless(Unit unit) {
         unit.setMinDamage(unit.getMaxDamage());
         manaPoints--;
     }
 
-    public void Curse(Unit unit){
+    public void curse(Unit unit) {
         unit.setMaxDamage(unit.getMinDamage());
         manaPoints--;
     }

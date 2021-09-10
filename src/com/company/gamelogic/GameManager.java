@@ -11,7 +11,9 @@ import com.company.util.ConsoleHelper;
 import com.company.util.RandomHelper;
 import com.company.util.SettingsHelper;
 import com.company.view.BattleField;
+import com.company.view.CommonUnitView;
 import com.company.view.ViewHelper;
+import com.company.view.WizardView;
 
 public class GameManager {
 
@@ -48,66 +50,98 @@ public class GameManager {
     }
 
     public void gameLoop() throws Exception {
+        //todo replace true on boolean variable
         while (true) {
             drawBattleField();
 
-            ConsoleHelper.printlnMessage("Ход игрока: " + player1.getPlayerName());
-            ConsoleHelper.printlnDivider();
+            //todo if(player 1 units size == 0) game over player2 win
 
-            ConsoleHelper.printlnMessage("Список существ игрока " + player1.getPlayerName() + ": ");
-            ViewHelper.showPlayerUnits(player1);
-            ConsoleHelper.printlnDivider();
-
-            ConsoleHelper.printlnMessage("Список существ игрока " + player2.getPlayerName() + ": ");
-            ViewHelper.showPlayerUnits(player2);
-            ConsoleHelper.printlnDivider();
-
-            int choosePlayer1UnitId = ConsoleHelper.inputInt("Введите id выбранного существа игока " + player1.getPlayerName() + ": ", player1.getAllUnitsIds());
-
-            Unit choosePlayer1Unit = player1.getUnitById(choosePlayer1UnitId);
-
-            if (choosePlayer1Unit instanceof Horseman) {
-                ConsoleHelper.printlnMessage("Список действий: ");
-                ConsoleHelper.printlnMessage("1.Переместиться");
-                ConsoleHelper.printlnMessage("2.Атаковать");
-                int action = ConsoleHelper.inputInt("Выберите действие: ", 1, 2);
-
-                switch (action) {
-                    case 1: {
-                        RectangleArea fieldArea = new RectangleArea(0, battleFieldCountRows, 0, battleFieldCountColumns);
-                        int moveDirection = ConsoleHelper.inputInt("Выберите направление движения(1-вверх, 2-вниз, 3-влево, 4-вправо): ", 1, 4);
-                        choosePlayer1Unit.move(moveDirection, fieldArea);
-                    }
-                    break;
-                    case 2: {
-                        //todo do attack
-                        int defendUnitId = ConsoleHelper.inputInt("Введите id защищающегося существа игока "+player2.getPlayerName()+": ", player2.getAllUnitsIds());
-
-                        Unit choosePlayer2Unit = player2.getUnitById(defendUnitId);
-
-                        choosePlayer1Unit.canAttack(choosePlayer2Unit);
-                    }
-                    break;
-                }
-            }
-
-            /*int attackUnitId = ConsoleHelper.inputInt("Введите id атакующего существа игока "+player1.getPlayerName()+": ", player1.getAllUnitsIds());
-
-            int defendUnitId = ConsoleHelper.inputInt("Введите id защищающегося существа игока "+player2.getPlayerName()+": ", player2.getAllUnitsIds());
-
-            ConsoleHelper.printlnDivider();
-
-            ConsoleHelper.printlnMessage("Выбранное атакующее существо: ");
-            ViewHelper.showUnit(player1.getUnitById(attackUnitId));
-
-            ConsoleHelper.printlnMessage("Выбранное защищающееся существо: ");
-            ViewHelper.showUnit(player2.getUnitById(defendUnitId));*/
+            player1Step();
 
             ConsoleHelper.waitEnter();
+
+            deleteDeadUnits(player2);
+
+            drawBattleField();
+
+            //todo if(player 2 units size == 0) game over player1 win
+
+            player2Step();
+
+            ConsoleHelper.waitEnter();
+
+            deleteDeadUnits(player1);
         }
     }
 
     //region helper private methods
+
+    private void player1Step() {
+        ConsoleHelper.printlnMessage("Ход игрока: " + player1.getPlayerName());
+        ConsoleHelper.printlnDivider();
+
+        ConsoleHelper.printlnMessage("Список существ игрока " + player1.getPlayerName() + ": ");
+        ViewHelper.showPlayerUnits(player1);
+        ConsoleHelper.printlnDivider();
+
+        ConsoleHelper.printlnMessage("Список существ игрока " + player2.getPlayerName() + ": ");
+        ViewHelper.showPlayerUnits(player2);
+        ConsoleHelper.printlnDivider();
+
+        int choosePlayer1UnitId = ConsoleHelper.inputInt("Введите id выбранного существа игока " + player1.getPlayerName() + ": ", player1.getAllUnitsIds());
+        Unit choosePlayer1Unit = player1.getUnitById(choosePlayer1UnitId);
+
+        CommonUnitView unitViewPlayer1Unit;
+
+        if (choosePlayer1Unit instanceof Wizard) {
+            unitViewPlayer1Unit = new WizardView(player1, choosePlayer1Unit, player2, battleField);
+        } else {
+            unitViewPlayer1Unit = new CommonUnitView(choosePlayer1Unit, player2, battleField);
+        }
+
+        unitViewPlayer1Unit.showActionsMenu();
+        unitViewPlayer1Unit.chooseAction();
+        unitViewPlayer1Unit.doAction();
+
+
+    }
+
+    private void player2Step() {
+        ConsoleHelper.printlnMessage("Ход игрока: " + player2.getPlayerName());
+        ConsoleHelper.printlnDivider();
+
+        ConsoleHelper.printlnMessage("Список существ игрока " + player1.getPlayerName() + ": ");
+        ViewHelper.showPlayerUnits(player1);
+        ConsoleHelper.printlnDivider();
+
+        ConsoleHelper.printlnMessage("Список существ игрока " + player2.getPlayerName() + ": ");
+        ViewHelper.showPlayerUnits(player2);
+        ConsoleHelper.printlnDivider();
+
+        int choosePlayer2UnitId = ConsoleHelper.inputInt("Введите id выбранного существа игока " + player2.getPlayerName() + ": ", player2.getAllUnitsIds());
+        Unit choosePlayer2Unit = player2.getUnitById(choosePlayer2UnitId);
+
+        CommonUnitView unitViewPlayer2Unit;
+
+        if (choosePlayer2Unit instanceof Wizard) {
+            unitViewPlayer2Unit = new WizardView(player2, choosePlayer2Unit, player1, battleField);
+        } else {
+            unitViewPlayer2Unit = new CommonUnitView(choosePlayer2Unit, player1, battleField);
+        }
+
+        unitViewPlayer2Unit.showActionsMenu();
+        unitViewPlayer2Unit.chooseAction();
+        unitViewPlayer2Unit.doAction();
+    }
+
+    private void deleteDeadUnits(Player player) {
+        for (int i = 0; i < player.getUnits().size(); i++) {
+            if (player.getUnits().get(i).getHp() <= 0) {
+                player.getUnits().remove(i);
+                i--;
+            }
+        }
+    }
 
     private void drawBattleField() {
         battleField.clear();
